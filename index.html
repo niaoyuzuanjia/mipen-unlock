@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>小米巨能写BL解锁中心</title>
+    <style>
+        body {
+            font-family: 'MiSans', Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: #4333d6;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .device-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .device-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .firmware-selector {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background-color: #ff6700;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .tutorial-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>小米巨能写BL解锁中心</h1>
+        <p>支持彩色版/黑色版 | 多版本降级 | 第三方固件刷入</p>
+    </div>
+    
+    <div class="device-selector">
+        <div class="device-card">
+            <h2>小米巨能写彩色版</h2>
+            <div>
+                <button class="btn" onclick="selectDevice('color', 'new')">澎湃s1 旧版</button>
+                <button class="btn" onclick="selectDevice('color', 'old')">O1 新版 </button>
+            </div>
+        </div>
+        
+        <div class="device-card">
+            <h2>黑色小米巨能写</h2>
+            <div>
+                <button class="btn" onclick="selectDevice('black', 'new')">澎湃s1 旧版</button>
+                <button class="btn" onclick="selectDevice('black', 'old')">O1 新版</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="firmware-selector" id="firmwareSection">
+        <h2>选择固件版本</h2>
+        <div>
+            <h3>官方固件降级</h3>
+            <button class="btn" onclick="selectFirmware('miui9')">MIUI 9</button>
+            <button class="btn" onclick="selectFirmware('miui10')">MIUI 10</button>
+            <button class="btn" onclick="selectFirmware('miui11')">MIUI 11</button>
+            <button class="btn" onclick="selectFirmware('miui12')">MIUI 12</button>
+            <button class="btn" onclick="selectFirmware('miui12.5')">MIUI 12.5</button>
+            <button class="btn" onclick="selectFirmware('miui13')">MIUI 13</button>
+            <button class="btn" onclick="selectFirmware('miui14')">MIUI 14</button>
+            <button class="btn" onclick="selectFirmware('hyperos1')">澎湃OS 1.0</button>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h3>第三方固件</h3>
+            <button class="btn" onclick="selectFirmware('chenguang')">晨光适配版</button>
+            <button class="btn" onclick="selectFirmware('deli_s865')">得力S865适配版</button>
+        </div>
+    </div>
+    
+    <div class="tutorial-section">
+        <h2>解锁教程</h2>
+        <div>
+            
+            <h3>步骤1: 下载解锁工具</h3>
+            <button class="btn">下载官方解锁工具</button>
+            <button class="btn">下载第三方工具包</button>
+            <button class="btn">下载ADB驱动</button>
+            
+            <h3>步骤2: 进入Fastboot模式</h3>
+            <p>关机后拔出底盖进入Fastboot...</p>
+            
+            <h3>步骤3: 连接解锁</h3>
+            <p>使用解锁工具连接设备并解锁...</p>
+        </div>
+    </div>
+    
+    <script>
+        function selectDevice(type, version) {
+            alert(`已选择: ${type === 'color' ? '彩色版' : '黑色版'} - ${version === 'new' ? '澎湃OS 1.0' : 'MIUI 14'}`);
+        }
+        
+        function selectFirmware(version) {
+            const names = {
+                'miui9': 'MIUI 9',
+                'miui10': 'MIUI 10',
+                'miui11': 'MIUI 11',
+                'miui12': 'MIUI 12',
+                'miui12.5': 'MIUI 12.5',
+                'miui13': 'MIUI 13',
+                'miui14': 'MIUI 14',
+                'hyperos1': '澎湃OS 1.0',
+                'chenguang': '晨光适配版',
+                'deli_s865': '得力S865适配版'
+            };
+            alert(`已选择固件: ${names[version]}`);
+        }
+    </script>
+  <button class="btn" onclick="">解锁并刷入固件/降级</button>
+                <button class="btn" onclick="">仅解锁 </button>
+                <p>等待1~2分钟后拔出</p>
+</body>
+</html>
