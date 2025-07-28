@@ -6,7 +6,7 @@
 
  
 ## mipen-unlock 是开源软件和自由软件吗？
-###是的， 本项目根据GNU General Public License3.0 协议开源；我们已经将小米巨能写bl锁解锁工具捐赠给了全世界，至于“谁”在什么时候加入我们，这需要看个人或组织的行为。
+是的， 本项目根据GNU General Public License3.0 协议开源；我们已经将小米巨能写bl锁解锁工具捐赠给了全世界，至于“谁”在什么时候加入我们，这需要看个人或组织的行为。
 
-##mipen-unlock 基于什么？
-### mipen-unlock 基于 html
+mipen-unlock 基于什么？
+mipen-unlock 基于 html
