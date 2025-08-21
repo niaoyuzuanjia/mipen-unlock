@@ -2,22 +2,27 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>小米巨能写BL解锁中心</title>
+    <title>小米巨能写BL解锁工具</title>
     <style>
-        body {
-            font-family: 'MiSans', Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
+           body {
+        font-family: '思源字体', Arial;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-image: url('https://i.hd-r.icu/757fb44b2d1033da7a4f1893cb1d1c2d.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
         }
         .header {
-            background-color: #4333d6;
+            background: rgba(64, 57, 249, 0.6); 
             color: white;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 64px;
+            box-shadow: 50%;
             text-align: center;
             margin-bottom: 30px;
+             backdrop-filter: blur(3px)
         }
         .device-selector {
             display: grid;
@@ -26,104 +31,198 @@
             margin-bottom: 30px;
         }
         .device-card {
-            background: white;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 64px;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 60px;
+            backdrop-filter: blur(3px);
+        }
+            .device-card-old {
+                background: rgba(255, 255, 255, 0.6);
+                border-radius: 32px;
+                padding: 20px;
+                box-shadow: 30px;
+                backdrop-filter: blur(3px);
         }
         .firmware-selector {
-            background: white;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5); 
+            border-radius: 30px;
             padding: 20px;
             margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(3px);
         }
+
         .btn {
-            background-color: #4333d6;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 5px;
-        }
+    background: rgba(47, 40, 253, 0.8);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 24px;
+    cursor: pointer;
+    margin: 5px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform: scale(1);
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+        
         .tutorial-section {
-            background: white;
+            background: rgba(255, 255, 255, 0.8); 
             border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>小米巨能写BL解锁工具</h1>
-        <p>支持彩色版/黑色版 | 多版本降级 | 第三方固件刷入</p>
+        <p>vre 2.6.0 rc2 .sodium </p>
+
     </div>
-    
+
     <div class="device-selector">
         <div class="device-card">
-            <h2>小米巨能写彩色版</h2>
-            <div>
-                <button class="btn" onclick="selectDevice('color', 'new')">澎湃s1 旧版</button>
-                <button class="btn" onclick="selectDevice('color', 'old')">O1 新版 </button>
+                <button class="btn" onclick="selectFirmware('adb')">adb 无线调试</button>
+                <button class="btn" onclick="selectFirmware('usb')">usb调试 </button>
             </div>
         </div>
-        
-        <div class="device-card">
-            <h2>黑色小米巨能写</h2>
-            <div>
-                <button class="btn" onclick="selectDevice('black', 'new')">澎湃s1 旧版</button>
-                <button class="btn" onclick="selectDevice('black', 'old')">O1 新版</button>
-            </div>
-        </div>
-    </div>
+
     
-    <div class="firmware-selector" id="firmwareSection">
-        <h2>选择固件版本</h2>
-        <div>
+    <div class="device-card" >
+        <h2>选择固件,NGZX安装包</h2>
+        <div style="margin-top: 20px;">
+            <h3>上传自定包</h3>
+            <input type="file" id="firmwareUpload" accept=".zip,.ngzx" style="display: none;">
+            <button class="btn" onclick="document.getElementById('firmwareUpload').click()">选择包文件</button>
+            <span id="fileNameDisplay"></span>
+        </div>
+
+<!--        <div class="device-card" >-->
+<!--            <h2>模块</h2>-->
+<!--            <div style="margin-top: 20px;">-->
+<!--                <h3>上传.qmal文件</h3>-->
+<!--                <input type="file" id="firmwareUpload" accept=".qmal," style="display: none;">-->
+<!--                <button class="btn" onclick="document.getElementById('firmwareUpload').click()">选择模块文件</button>-->
+<!--                <span id="fileNameDisplay"></span>-->
+<!--            </div>-->
+        <p>  </p>
+        <div class="device-card">
             <h3>官方固件降级</h3>
             <button class="btn" onclick="selectFirmware('miui9')">MIUI 9</button>
             <button class="btn" onclick="selectFirmware('miui10')">MIUI 10</button>
             <button class="btn" onclick="selectFirmware('miui11')">MIUI 11</button>
-            <button class="btn" onclick="selectFirmware('miui12')">MIUI 12</button>
+            <button class="btn" onclick="sel
+            
+            
+            ectFirmware('miui12')">MIUI 12</button>
             <button class="btn" onclick="selectFirmware('miui12.5')">MIUI 12.5</button>
             <button class="btn" onclick="selectFirmware('miui13')">MIUI 13</button>
             <button class="btn" onclick="selectFirmware('miui14')">MIUI 14</button>
             <button class="btn" onclick="selectFirmware('hyperos1')">澎湃OS 1.0</button>
+            <button class="btn" onclick="selectFirmware('hyperos2')">澎湃OS 2.0</button>
         </div>
-        
-        <div style="margin-top: 20px;">
+    <p>    </p>
+    <p>    </p>
+        <div class="device-card">
             <h3>第三方固件</h3>
             <button class="btn" onclick="selectFirmware('chenguang')">晨光适配版</button>
             <button class="btn" onclick="selectFirmware('deli_s865')">得力S865适配版</button>
             <button class="btn" onclick="selectFirmware('sanlin_um100')">三菱um100</button>
+            <button class="btn" onclick="selectFirmware('ds')">点石移植固件</button>
+            <button class="btn" onclick="selectFirmware('xmzxb')">小米中性笔</button>
+            <button class="btn" onclick="selectFirmware('flyme10')">flyme10</button>
+            <button class="btn" onclick="selectFirmware('fedoralinux39')">美国鸿蒙(fedoralinux39)</button>
+            <button class="btn" onclick="selectFirmware('lineageos19')">lineageOS19(a13)</button>
+            <button class="btn" onclick="selectFirmware('pep13')">pixel experience plus 13</button>
+   <button class="btn" onclick="selectFirmware('archlinux')">archlinux</button>
+            <button class="btn" onclick="selectFirmware('ubuntults')">ubuntu24.04.2 LTS(去snap,广告)</button>
+            <button class="btn" onclick="selectFirmware('GrapheneOS')">石墨烯系统</button>   
+  <button class="btn" onclick="selectFirmware('hm')">花伪红门5</button>
+            <button class="btn" onclick="selectFirmware('freebsd')">freebsd</button>   
+            <button class="btn" onclick="selectFirmware('mint')">linuxmint </button>
+            <button class="btn" onclick="selectFirmware('oppenwrt')">oppenwrt </button>
+            <button class="btn" onclick="selectFirmware('mac')">mac OS 13 </button>
+            <button class="btn" onclick="selectFirmware('zorin')">zorin OS 17.3 Pro </button>
+            <button class="btn" onclick="selectFirmware('fyde')">fyde OS 20 </button>
+            <button class="btn" onclick="selectFirmware('oneui')">one ui</button>
+            <button class="btn" onclick="selectFirmware('funtouch')">fountouch OS 10 </button>
+            <button class="btn" onclick="selectFirmware('pixelos')">pixel OS</button>
+            <button class="btn" onclick="selectFirmware('win8')">windows8.1</button>
+            <button class="btn" onclick="selectFirmware('win10')">windows 10</button>
+            <button class="btn" onclick="selectFirmware('win11')">windows 11(需TPM2.0)</button>
         </div>
-    </div>
+        <P>    </P>
+        <P>    </P>
+        <div class="device-card">
+            <h3>第三方包（npck包管理器）</h3>
+            <button class="btn" onclick="selectFirmware('tghz')">10ghz超频包(nnnn)</button>
+            <button class="btn" onclick="selectFirmware('gemini2500')">gemini 2.5flash(nnnn)</button>
+            <button class="btn" onclick="selectFirmware('bitlink')">交火挖比特币(号角工作室)</button>
+            <button class="btn" onclick="selectFirmware('ds')">dicksuck R1(2025/0528)</button>
+            <button class="btn" onclick="selectFirmware('jdkpcl2')">jdk17+pcl2</button>
+            <button class="btn" onclick="selectFirmware('gcam')">谷歌相机75合一(nnnn)</button>
+            <button class="btn" onclick="selectFirmware('micam')">小米15移植相机包v6.0(log模式+水印)</button>
+            <button class="btn" onclick="selectFirmware('tpm2')">tpm2.0激活(win11)</button>
+        </div>
+
+        </div>
+<p>    </p>
+    <p>    </p>
     
-    <div class="tutorial-section">
+    <div class="device-card">
         <h2>解锁教程</h2>
         <div>
-            
-            <h3>步骤1: 下载解锁工具</h3>
-            <button class="btn">下载官方解锁工具</button>
-            <button class="btn">下载第三方工具包</button>
-            <button class="btn">下载ADB驱动</button>
-            
-            <h3>步骤2: 进入Fastboot模式</h3>
+            <h3>步骤1: 进入Fastboot模式</h3>
             <p>关机后拔出底盖进入Fastboot...</p>
             
-            <h3>步骤3: 连接解锁</h3>
+            <h3>步骤2: 连接解锁</h3>
             <p>使用解锁工具连接设备并解锁...</p>
         </div>
     </div>
-    
+
+        <p>  </p>
+        <p>  </p>
+        <div class="device-card">
+            <button class="btn" onclick="selectFirmware('sudomiinstall')">解锁并刷入固件/降级</button>
+            <button class="btn" onclick="selectFirmware('oubl')">仅解锁 </button>
+            <button class="btn" onclick="selectFirmware('rec')">恢复模式刷机</button>
+            <p>等待1~2分钟后拔出</p>
+
     <script>
-        function selectDevice(type, version) {
-            alert(`已选择: ${type === 'color' ? '彩色版' : '黑色版'} - ${version === 'new' ? '澎湃S1' : 'O1'}`);
-        }
+        function selectFirmware(type) {
+            const names = {
+                'adb': 'mi pen Wireless debug',
+                'usb': 'USB debug',
+            };
+            alert(`Android Debug Bridge: ${names[type]}`);
+        };
+
+        document.getElementById('firmwareUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const fileName = file.name;
+            const fileExt = fileName.split('.').pop().toLowerCase();
+            
+            if (fileExt !== 'zip' && fileExt !== 'ngzx') {
+                alert('只支持.zip和.ngzx格式的固件文件');
+                return;
+            }
+            
+            document.getElementById('fileNameDisplay').textContent = fileName;
+            alert(`已选择自定义固件: ${fileName}`);
+        });
+
         
-        function selectFirmware(version) {
+        function selectFirmware(vre) {
             const names = {
                 'miui9': 'MIUI 9',
                 'miui10': 'MIUI 10',
@@ -133,15 +232,68 @@
                 'miui13': 'MIUI 13',
                 'miui14': 'MIUI 14',
                 'hyperos1': '澎湃OS 1.0',
+                'hyperos2': '澎湃OS 2.0',
                 'chenguang': '晨光适配版',
                 'deli_s865': '得力S865适配版',
                 'sanlin_um100': '三菱um100',
+                'ds': '点石移植固件',
+                'flyme10': 'flyme10',
+                'fedoralinux39': 'fedoralinux39',
+                'lineageos19': 'lineageOS19(a13)',
+                'pep13': 'pixel experience plus 13',
+                'archlinux': 'archlinux',
+                'ubuntults': 'ubuntu24.04.2 LTS破解版(去snap，去广告)',
+                'GrapheneOS': '石墨烯系统',
+                'hm': '花伪红门5',
+                'freebsd': 'freebsd',
+                'mint': 'linuxmint ',
+                'oppenwrt': 'oppenwrt',
+                'mac': 'mac OS 13 ',
+                'xmzxb': '小米中性笔',
+                'zorin': 'zorin OS 17.3 Pro',
+                'fyde': 'fyde OS 20',
+                'oneui': 'oneui',
+                'funtouch': 'funtouch OS 10',
+                'pixelos': 'pixel OS',
+                'win8': 'windows 8.1',
+                'win10': 'windows10',
+                'win11': 'windows11',
+
+
+                'tghz': '10ghz超频包by nnnn',
+                'gemini2500': 'gemini 2.5flash(nnnn)',
+                'bitlink': '交火挖比特币(号角工作室)',
+                'ds': 'dicksuck R1(2025/0528，号角工作室)',
+                'jdkpcl2': 'jdk17+pcl2',
+                'gcam': '谷歌相机75合一(nnnn)',
+                'micam': '小米15移植相机包v6.0(log模式+水印)',
+                'tpm2': 'tpm2.0激活(win11)',
+
+
+
             };
-            alert(`已选择固件: ${names[version]}`);
+            alert(`已选择包: ${names[vre]}`);
         }
+
     </script>
-  <button class="btn" onclick="">解锁并刷入固件/降级</button>
-                <button class="btn" onclick="">仅解锁 </button>
-                <p>等待1~2分钟后拔出</p>
+
+
+
+</div>
+                <p>  </p>
+                 <div class="device-card">
+                <p>This software is based on GPL v3 and is open source, please use it in accordance with the open source license</p>
+                <p>此软件基于GPL v3开源,请按照开源协议使用</p>
+                <p>此軟體基於GPL v3開源,請按照開源協定使用</p>
+                <p>このソフトウェアはGPL v3に基づいてオープンソースであり、オープンソースライセンスに従ってご利用ください</p>
+            </div>
+
+            <p>  </p>
+            <div class="device-card">
+<p>Copyright ©2019~2023 niotease Cloud services all rights reserved</p>
+                <p><span style="font-family: 'Dancing Script', sans-serif;"><i>using technology to change the world</i></span></p>
+
+<div>
+
 </body>
 </html>
