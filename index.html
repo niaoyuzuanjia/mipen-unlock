@@ -1,240 +1,274 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>小米巨能写BL解锁工具</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            /* MD3 颜色系统 */
+            --primary: #6750A4;
+            --on-primary: #FFFFFF;
+            --primary-container: #EADDFF;
+            --on-primary-container: #21005D;
+            --secondary: #625B71;
+            --on-secondary: #FFFFFF;
+            --secondary-container: #E8DEF8;
+            --on-secondary-container: #1D192B;
+            --tertiary: #7D5260;
+            --on-tertiary: #FFFFFF;
+            --tertiary-container: #FFD8E4;
+            --on-tertiary-container: #31111D;
+            --error: #B3261E;
+            --on-error: #FFFFFF;
+            --error-container: #F9DEDC;
+            --on-error-container: #410E0B;
+            --background: #FFFBFE;
+            --on-background: #1C1B1F;
+            --surface: #1c1b1f;
+            --on-surface: #1C1B1F;
+            --surface-variant: #E7E0EC;
+            --on-surface-variant: #49454F;
+            --outline: #79747E;
+            --shadow: #000000;
+
+            /* 形状系统 */
+            --shape-corner-extra-small: 4px;
+            --shape-corner-small: 8px;
+            --shape-corner-medium: 12px;
+            --shape-corner-large: 16px;
+            --shape-corner-extra-large: 28px;
+            --shape-corner-full: 9999px;
+
+            /* 高程阴影 */
+            --elevation-1: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+            --elevation-2: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+            --elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+
+            /* 动画曲线 */
+            --motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+            --motion-duration-short4: 200ms;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
         body {
-            font-family: '思源字体', Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-image: url('https://i.hd-r.cn/03bd135b7dc1e28513ca971d7ee6c158.png');
+            background-color:#1C1B1F;
+            color: #ffffff;
+            line-height: 1.5;
+            padding: 16px;
+
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        /* 透镜效果容器 */
-        .lens-container {
-            position: fixed;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.25px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #cccccc;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 24px;
+            background: var(--surface);
+            border-radius: var(--shape-corner-large);
+            box-shadow: var(--elevation-1);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .component-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px;
+            background: var(--surface-variant);
+            border-radius: var(--shape-corner-medium);
+        }
+
+        /* 按钮样式 - MD3 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 24px;
+            margin: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.1px;
+            text-transform: none;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            outline: none;
+            transition: all var(--motion-duration-short4) var(--motion-easing-emphasized);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
             width: 100%;
             height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9999;
+            background: currentColor;
+            opacity: 0;
+            border-radius: inherit;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover::after {
+            opacity: 0.08;
+        }
+
+        .btn:focus::after {
+            opacity: 0.12;
+        }
+
+        .btn:active::after {
+            opacity: 0.12;
+        }
+
+        .btn-filled {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            box-shadow: var(--elevation-1);
+        }
+
+        .btn-filled:hover {
+            box-shadow: var(--elevation-2);
+        }
+
+        .btn-tonal {
+            background-color: var(--secondary-container);
+            color: var(--on-secondary-container);
+        }
+
+        .btn-outlined {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--outline);
+        }
+
+        .btn-elevated {
+            background-color: var(--surface);
+            color: var(--primary);
+            box-shadow: var(--elevation-1);
+        }
+
+        .btn-elevated:hover {
+            box-shadow: var(--elevation-2);
+        }
+
+        .btn-text {
+            background-color: transparent;
+            color: var(--primary);
+        }
+
+        .btn-disabled {
+            background-color: rgba(28, 27, 31, 0.12);
+            color: rgba(28, 27, 31, 0.38);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-disabled::after {
             display: none;
         }
 
-        /* 透镜元素 */
-        .lens {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(1x) brightness(1.1);
-            -webkit-backdrop-filter: blur(2px) brightness(1.1);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out;
+        .btn-icon {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        /* 卡片样式 - MD3 */
+        .card {
+            background: var(--surface);
+            border-radius: var(--shape-corner-medium);
             overflow: hidden;
-        }
-
-        /* 透镜光晕效果 */
-        .lens::after {
-            content: '';
-            position: absolute;
-            top: -10%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-            animation: lensGlow 3s infinite;
-        }
-
-        @keyframes lensGlow {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 0.9; }
-        }
-
-        /* 头部样式 */
-        .header {
-            background: rgba(64, 57, 249, 0.4);
-            color: white;
-            padding: 20px;
-            border-radius: 64px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            margin-bottom: 30px;
-            backdrop-filter: blur(1px);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 头部悬停效果 */
-        .header:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            background: rgba(64, 57, 249, 0.7);
-        }
-
-        /* 设备选择器 */
-        .device-selector {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        /* 卡片样式 - 应用透镜效果 */
-        .device-card {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 48px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(1px);
+            box-shadow: var(--elevation-1);
+            transition: box-shadow 0.3s ease;
             margin-bottom: 20px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            transform-origin: center;
-        }
-
-        /* 卡片悬停效果 - 增强的透镜感 */
-        .device-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(5px);
-        }
-
-        /* 卡片内光源效果 */
-        .device-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-            transform: rotate(30deg);
-            opacity: 0.4;
-            transition: all 0.5s ease;
-        }
-
-        .device-card:hover::before {
-            opacity: 0.8;
-            transform: rotate(45deg) scale(1.1);
-        }
-
-        /* 老式卡片样式 */
-        .device-card-old {
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 32px;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(1px);
-            transition: all 0.3s ease;
         }
 
-        .device-card-old:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        .card:hover {
+            box-shadow: var(--elevation-2);
         }
 
-        /* 固件选择器 */
-        .firmware-selector {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 30px;
-            padding: 20px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(1px);
-            transition: all 0.3s ease;
+        .card-content {
+            padding: 16px 0;
         }
 
-        .firmware-selector:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        .card-headline {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 8px;
         }
 
-        /* 按钮样式 - 透镜效果 */
-        .btn {
-            background: rgba(47, 40, 253, 0.7);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 32px;
-            cursor: pointer;
-            margin: 5px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: scale(1);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(1px);
-            z-index: 1;
+        .card-subhead {
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+            margin-bottom: 16px;
         }
 
-        /* 按钮悬停效果 */
-        .btn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-            background: rgba(47, 40, 253, 0.9);
+        .card-supporting-text {
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+            margin-bottom: 16px;
+            line-height: 1.5;
         }
 
-        /* 按钮内透镜效果 */
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-
-        .btn:hover::before {
-            opacity: 1;
-            transform: rotate(45deg);
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .btn:disabled {
-            background: rgba(128, 128, 128, 0.6);
-            cursor: not-allowed;
-        }
-
-        /* 教程部分 */
-        .tutorial-section {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 16px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .tutorial-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        .card-actions {
+            padding: 8px 0 0;
+            display: flex;
+            justify-content: flex-start;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         /* 进度条 */
         .progress-container {
             width: 100%;
             height: 20px;
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: var(--surface-variant);
             border-radius: 10px;
             margin: 15px 0;
             overflow: hidden;
@@ -245,359 +279,318 @@
         .progress-bar {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, rgba(47, 40, 253, 0.8), rgba(64, 57, 249, 0.6));
+            background-color: var(--primary);
             border-radius: 10px;
             transition: width 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 进度条内透镜效果 */
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: skewX(-20deg);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 200%; }
         }
 
         /* 状态消息 */
         .status-message {
             margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 16px;
+            border-radius: var(--shape-corner-medium);
+            background: var(--surface);
             display: none;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .status-message::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: statusShimmer 2s infinite;
-        }
-
-        @keyframes statusShimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
+            box-shadow: var(--elevation-1);
         }
 
         .success {
-            background: rgba(77, 217, 83, 0.7);
-            border-radius: 16px;
-            color: white;
+            background-color: var(--tertiary-container);
+            color: var(--on-tertiary-container);
         }
 
         .error {
-            background: rgba(255, 49, 33, 0.84);
-            border-radius: 16px;
-            color: white;
+            background-color: var(--error-container);
+            color: var(--on-error-container);
         }
 
         .warning {
-            background: rgba(255, 171, 49, 0.89);
-            border-radius: 16px;
-            color: white;
+            background-color: var(--secondary-container);
+            color: var(--on-secondary-container);
         }
 
         /* 文件上传显示 */
         #fileNameDisplay {
-            padding: 5px 10px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 16px;
+            border-radius: var(--shape-corner-medium);
+            background: var(--surface-variant);
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        /* 分割线 */
+        .divider {
+            height: 1px;
+            background-color: var(--outline);
+            margin: 16px 0;
+            opacity: 0.38;
+        }
+
+        /* 网格布局 */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        /* 头部样式 */
+        .header {
+            background: var(--primary);
+            color: var(--on-primary);
+            padding: 32px;
+            border-radius: var(--shape-corner-extra-large);
+            box-shadow: var(--elevation-2);
+            text-align: center;
+            margin-bottom: 30px;
             transition: all 0.3s ease;
         }
 
-        #fileNameDisplay:hover {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        .header:hover {
+            box-shadow: var(--elevation-3);
         }
 
-        /* 玻璃透镜卡片样式 */
-        .glass-lens-card {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 32px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow:
-                    0 8px 32px rgba(0, 0, 0, 0.1),
-                    0 0 0 1px rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
+        /* 教程部分 */
+        .tutorial-section {
+            background: var(--surface);
+            border-radius: var(--shape-corner-medium);
+            padding: 24px;
+            box-shadow: var(--elevation-1);
+            margin-bottom: 24px;
         }
 
-        /* 玻璃透镜卡片悬停效果 */
-        .glass-lens-card:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-10px) scale(1.01);
-            box-shadow:
-                    0 12px 40px rgba(0, 0, 0, 0.15),
-                    0 0 0 1px rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+        .tutorial-section:hover {
+            box-shadow: var(--elevation-2);
         }
 
-        /* 玻璃透镜卡片内部光晕 */
-        .glass-lens-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 30%,
-            rgba(255, 255, 255, 0.3) 0%,
-            rgba(255, 255, 255, 0.1) 50%,
-            transparent 70%);
-            opacity: 0.5;
-            transition: all 0.8s ease;
-            z-index: -1;
+        /* 固件选择器 */
+        .firmware-selector {
+            background: var(--surface);
+            border-radius: var(--shape-corner-medium);
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--elevation-1);
+            transition: all 0.3s ease;
         }
 
-        .glass-lens-card:hover::before {
-            opacity: 0.8;
-            transform: rotate(30deg) scale(1.1);
+        .firmware-selector:hover {
+            box-shadow: var(--elevation-2);
         }
 
-        /* 玻璃透镜卡片内部文本样式 */
-        .glass-lens-card h3 {
-            color: rgba(47, 40, 253, 0.9);
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+        /* 设备选择器 */
+        .device-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
-        .glass-lens-card p {
-            color: rgba(0, 0, 0, 0.8);
-            line-height: 1.6;
-            margin-bottom: 15px;
+        /* 设备卡片 */
+        .device-card {
+            background: var(--surface);
+            border-radius: var(--shape-corner-medium);
+            padding: 24px;
+            box-shadow: var(--elevation-1);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
         }
 
-        /* 玻璃透镜卡片中的图标容器 */
-        .glass-lens-icon {
+        .device-card:hover {
+            box-shadow: var(--elevation-2);
+        }
+
+        /* 芯片组件 - 用于标签 */
+        .chip {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-            color: rgba(47, 40, 253, 0.9);
-            font-size: 2rem;
+            padding: 6px 16px;
+            margin: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            background-color: var(--surface-variant);
+            color: var(--on-surface-variant);
+            cursor: pointer;
+            transition: all var(--motion-duration-short4) var(--motion-easing-emphasized);
         }
 
-        /* 玻璃透镜卡片中的列表样式 */
-        .glass-lens-card ul {
-            margin-bottom: 15px;
-            padding-left: 25px;
+        .chip:hover {
+            background-color: var(--primary);
+            color: var(--on-primary);
         }
 
-        .glass-lens-card li {
-            color: rgba(0, 0, 0, 0.7);
-            line-height: 1.8;
-            margin-bottom: 8px;
-            position: relative;
+        .chip-icon {
+            margin-right: 8px;
+            font-size: 18px;
         }
 
-        /* 玻璃透镜卡片中的列表项自定义标记 */
-        .glass-lens-card li::before {
-            content: '•';
-            color: rgba(47, 40, 253, 0.9);
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-        }
-
-        /* 玻璃透镜卡片变体 - 蓝色主题 */
-        .glass-lens-card.blue {
-            background: rgba(47, 40, 253, 0.1);
-            border: 1px solid rgba(47, 40, 253, 0.2);
-        }
-
-        .glass-lens-card.blue:hover {
-            background: rgba(47, 40, 253, 0.15);
-        }
-
-        .glass-lens-card.blue h3 {
-            color: rgba(47, 40, 253, 0.9);
-        }
-
-        .glass-lens-card.blue p,
-        .glass-lens-card.blue li {
-            color: rgba(0, 0, 0, 0.8);
+        /* 许可证文本 */
+        .license-text {
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+            text-align: center;
+            padding: 16px;
+            background: var(--surface-variant);
+            border-radius: var(--shape-corner-medium);
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-<!-- 透镜效果容器 -->
-<div class="lens-container" id="lensContainer">
-    <div class="lens" id="lens"></div>
-</div>
-<div class="header">
-    <h1>小米巨能写BL解锁工具</h1>
-    <p>2.7.1 </p>
-</div>
-
-<div class="device-selector">
-    <div class="device-card">
-        <button class="btn" onclick="selectFirmware('adb')">adb 无线调试</button>
-        <button class="btn" onclick="selectFirmware('usb')">usb调试 </button>
-    </div>
-</div>
-
-<div class="device-card">
-    <h2>选择固件,NGZX安装包</h2>
-    <div style="margin-top: 20px;">
-        <h3>上传自定包</h3>
-        <input type="file" id="firmwareUpload" accept=".zip,.ngzx" style="display: none;">
-        <button class="btn" onclick="document.getElementById('firmwareUpload').click()">选择包文件</button>
-        <p>支持zip,ngzx</p>
-    </div>
-</div>
-
-<div class="device-card">
-    <h3>官方固件降级</h3>
-    <button class="btn" onclick="selectFirmware('miui9')">MIUI 9</button>
-    <button class="btn" onclick="selectFirmware('miui10')">MIUI 10</button>
-    <button class="btn" onclick="selectFirmware('miui11')">MIUI 11</button>
-    <button class="btn" onclick="selectFirmware('miui12')">MIUI 12</button>
-    <button class="btn" onclick="selectFirmware('miui12.5')">MIUI 12.5</button>
-    <button class="btn" onclick="selectFirmware('miui13')">MIUI 13</button>
-    <button class="btn" onclick="selectFirmware('miui14')">MIUI 14</button>
-    <button class="btn" onclick="selectFirmware('hyperos1')">澎湃OS 1.0</button>
-    <button class="btn" onclick="selectFirmware('hyperos2')">澎湃OS 2.0</button>
-</div>
-
-<div class="device-card">
-    <h3>第三方固件</h3>
-    <button class="btn" onclick="selectFirmware('chenguang')">晨光适配版</button>
-    <button class="btn" onclick="selectFirmware('deli_s865')">得力S865适配版</button>
-    <button class="btn" onclick="selectFirmware('sanlin_um100')">三菱um100</button>
-    <button class="btn" onclick="selectFirmware('ds')">点石移植固件</button>
-    <button class="btn" onclick="selectFirmware('xmzxb')">小米中性笔</button>
-    <button class="btn" onclick="selectFirmware('flyme10')">flyme10</button>
-    <button class="btn" onclick="selectFirmware('fedoralinux39')">美国鸿蒙(fedoralinux39)</button>
-    <button class="btn" onclick="selectFirmware('lineageos19')">lineageOS19(a13)</button>
-    <button class="btn" onclick="selectFirmware('pep13')">pixel experience plus 13</button>
-    <button class="btn" onclick="selectFirmware('archlinux')">archlinux</button>
-    <button class="btn" onclick="selectFirmware('ubuntults')">ubuntu24.04.2 LTS(去snap,广告)</button>
-    <button class="btn" onclick="selectFirmware('GrapheneOS')">石墨烯系统</button>
-    <button class="btn" onclick="selectFirmware('hm')">花伪红门5</button>
-    <button class="btn" onclick="selectFirmware('freebsd')">freebsd</button>
-    <button class="btn" onclick="selectFirmware('mint')">linuxmint </button>
-    <button class="btn" onclick="selectFirmware('oppenwrt')">oppenwrt </button>
-    <button class="btn" onclick="selectFirmware('mac')">mac OS 13 </button>
-    <button class="btn" onclick="selectFirmware('zorin')">zorin OS 17.3 Pro </button>
-    <button class="btn" onclick="selectFirmware('fyde')">fyde OS 20 </button>
-    <button class="btn" onclick="selectFirmware('oneui')">one ui</button>
-    <button class="btn" onclick="selectFirmware('funtouch')">fountouch OS 10 </button>
-    <button class="btn" onclick="selectFirmware('pixelos')">pixel OS</button>
-    <button class="btn" onclick="selectFirmware('win8')">windows8.1</button>
-    <button class="btn" onclick="selectFirmware('win10')">windows 10</button>
-    <button class="btn" onclick="selectFirmware('win11')">windows 11(需TPM2.0)</button>
-</div>
-
-<div class="device-card">
-    <h3>第三方包（npck包管理器）</h3>
-    <button class="btn" onclick="selectFirmware('tghz')">10ghz超频包(nnnn)</button>
-    <button class="btn" onclick="selectFirmware('gemini2500')">gemini 2.5flash(nnnn)</button>
-    <button class="btn" onclick="selectFirmware('ds')">dicksuck 3.1</button>
-    <button class="btn" onclick="selectFirmware('bitlink')">交火挖比特币(号角工作室)</button>
-    <button class="btn" onclick="selectFirmware('jdkpcl2')">jdk17+pcl2</button>
-    <button class="btn" onclick="selectFirmware('gcam')">谷歌相机75合一(nnnn)</button>
-    <button class="btn" onclick="selectFirmware('micam')">小米15移植相机包v6.0(log模式+水印)</button>
-    <button class="btn" onclick="selectFirmware('tpm2')">tpm2.0激活(win11)</button>
-</div>
-
-<div class="device-card">
-    <h2>解锁教程</h2>
-    <div>
-        <h3>步骤1: 进入Fastboot模式</h3>
-        <p>关机后拔出底盖进入Fastboot...</p>
-
-        <h3>步骤2: 连接解锁</h3>
-        <p>使用解锁工具连接设备并解锁...</p>
-    </div>
-</div>
-
-<!-- 玻璃透镜卡片示例 -->
-<div class="glass-lens-card">
-    <div class="glass-lens-icon">⚡</div>
-    <h3>高级解锁功能</h3>
-    <p>本工具支持多种解锁方式和固件刷入选项，为您的小米巨能写笔提供全方位的自定义体验。</p>
-    <p>特点包括：<p>
-    <ul>
-        <li>安全的BL解锁流程</li>
-        <li>多版本固件降级支持</li>
-        <li>第三方固件适配</li>
-        <li>无线/有线调试模式</li>
-    </ul>
-</div>
-
-<!-- 第二个玻璃透镜卡片 - 蓝色主题 -->
-<div class="glass-lens-card blue">
-    <div class="glass-lens-icon">🔧</div>
-    <h3>使用提示与技巧</h3>
-    <p>为了获得最佳的解锁体验，请遵循以下建议：</p>
-    <ul>
-        <li>确保设备电量充足（建议80%以上）</li>
-        <li>提前备份重要数据，解锁过程可能会清除数据</li>
-        <li>选择与设备型号匹配的固件版本</li>
-        <li>解锁后可以自由安装自定义固件</li>
-        <li>定期检查更新以获取最新功能</li>
-    </ul>
-    <p>如有任何问题，请参考详细教程或联系技术支持。</p>
-</div>
-
-<div class="device-card">
-    <button class="btn" id="installBtn" onclick="handleAction('sudomiinstall')">解锁并刷入固件/降级</button>
-    <button class="btn" id="unlockBtn" onclick="handleAction('oubl')">仅解锁 </button>
-    <button class="btn" id="recoveryBtn" onclick="handleAction('rec')">恢复模式刷机</button>
-
-    <div id="progress-container" class="progress-container">
-        <div id="progress-bar" class="progress-bar"></div>
+<div class="container">
+    <div class="header">
+        <h1>小米巨能写BL解锁工具</h1>
     </div>
 
-    <div id="statusMessage" class="status-message"></div>
-</div>
+    <!-- 调试模式选择 -->
+    <div class="section">
+        <h2>调试模式</h2>
+        <div class="card-actions">
+            <button class="btn btn-filled" onclick="selectFirmware('adb')">
+                <i class="material-icons btn-icon">wifi</i>
+                adb 无线调试
+            </button>
+            <button class="btn btn-filled" onclick="selectFirmware('usb')">
+                <i class="material-icons btn-icon">usb</i>
+                USB调试
+            </button>
+        </div>
+    </div>
 
-<div class="device-card">
-    <p>This software is based on GPL v3 and is open source, please use it in accordance with the open source license</p>
-    <p>此软件基于GPL v3开源,请按照开源协议使用</p>
-    <p>此軟體基於GPL v3開源,請按照開源協定使用</p>
-    <p>このソフトウェアはGPL v3に基づいてオープンソースであり、オープンソースライセンスに従ってご利用ください</p>
-</div>
+    <!-- 固件上传 -->
+    <div class="section">
+        <h2>选择固件/NGZX安装包</h2>
+        <h3>上传自定义包</h3>
 
-<div class="device-card">
-    <p>Copyright ©2019~2025 niotease Cloud services all rights reserved</p>
+            <input type="file" id="firmwareUpload" accept=".zip,.ngzx" style="display: none;">
+            <button class="btn btn-outlined" onclick="document.getElementById('firmwareUpload').click()">选择包文件</button>
+            <div id="fileNameDisplay"></div>
+        <p class="card-supporting-text">支持 zip, ngzx 格式</p>
+    </div>
+
+    <!-- 官方固件降级 -->
+    <div class="section">
+        <h2>官方固件降级</h2>
+        <div class="button-grid">
+            <button class="btn btn-tonal" onclick="selectFirmware('miui9')">MIUI 9</button>
+            <button class="btn btn-tonal" onclick="selectFirmware('miui10')">MIUI 10</button>
+            <button class="btn btn-tonal" onclick="selectFirmware('miui11')">MIUI 11</button>
+            <button class="btn btn-tonal" onclick="selectFirmware('miui12')">MIUI 12</button>
+            <button class="btn btn-tonal" onclick="selectFirmware('miui12.5')">MIUI 12.5</button>
+            <button class="btn btn-tonal" onclick="selectFirmware('miui13')">MIUI 13</button>
+            <button class="btn btn-tonal" onclick="selectFirmware('miui14')">MIUI 14</button>
+            <button class="btn btn-tonal" onclick="selectFirmware('hyperos1')">澎湃OS 1.0</button>
+            <button class="btn btn-tonal" onclick="selectFirmware('hyperos2')">澎湃OS 2.0</button>
+            <button class="btn btn-tonal" onclick="selectFirmware('hyperos3')">澎湃OS 3.0</button>
+        </div>
+    </div>
+
+    <!-- 第三方固件 -->
+    <div class="section">
+        <h2>第三方固件</h2>
+        <div class="button-grid">
+            <button class="btn btn-outlined" onclick="selectFirmware('chenguang')">晨光适配版</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('deli_s865')">得力S865适配版</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('sanlin_um100')">三菱um100</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('xmzxb')">小米中性笔</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('flyme10')">Flyme 10</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('fedoralinux39')">Fedora Linux 39</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('lineageos19')">LineageOS 19</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('pep13')">Pixel Experience Plus 13</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('archlinux')">Arch Linux</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('ubuntults')">Ubuntu 24.04.2 LTS</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('GrapheneOS')">石墨烯系统</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('hm')">红门5</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('freebsd')">FreeBSD</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('mint')">Linux Mint</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('oppenwrt')">OpenWrt</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('mac')">mac OS 13</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('zorin')">Zorin OS 17.3 Pro</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('fyde')">Fyde OS 20</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('oneui')">One UI</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('funtouch')">Funtouch OS 10</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('pixelos')">Pixel OS</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('win8')">Windows 8.1</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('win10')">Windows 10</button>
+            <button class="btn btn-outlined" onclick="selectFirmware('win11')">Windows 11</button>
+        </div>
+    </div>
+
+    <!-- 第三方包 -->
+    <div class="section">
+        <h2>第三方包（npck包管理器）</h2>
+        <div class="button-grid">
+            <button class="btn btn-text" onclick="selectFirmware('tghz')">10GHz超频包</button>
+            <button class="btn btn-text" onclick="selectFirmware('gemini2500')">Gemini 2.5 Flash</button>
+            <button class="btn btn-text" onclick="selectFirmware('ds')">Dicksuck 3.1</button>
+            <button class="btn btn-text" onclick="selectFirmware('bitlink')">交火挖比特币</button>
+            <button class="btn btn-text" onclick="selectFirmware('jdkpcl2')">JDK17 + PCL2</button>
+            <button class="btn btn-text" onclick="selectFirmware('gcam')">谷歌相机75合一</button>
+            <button class="btn btn-text" onclick="selectFirmware('micam')">小米15移植相机包</button>
+            <button class="btn btn-text" onclick="selectFirmware('tpm2')">TPM 2.0激活</button>
+        </div>
+    </div>
+
+    <!-- 解锁教程 -->
+    <div class="section">
+        <h2>解锁教程</h2>
+        <div class="tutorial-section">
+            <h3>步骤1: 进入Fastboot模式</h3>
+            <p>关机后拔出底盖进入Fastboot模式...</p>
+        </div>
+        <div class="tutorial-section">
+            <h3>步骤2: 连接解锁</h3>
+            <p>使用解锁工具连接设备并解锁...</p>
+        </div>
+    </div>
+
+    <!-- 使用提示卡片 -->
+    <div class="card">
+        <div class="card-content">
+            <h3 class="card-headline">使用提示与技巧</h3>
+            <p class="card-supporting-text">为了获得最佳的解锁体验，请遵循以下建议：</p>
+            <ul class="card-supporting-text" style="padding-left: 20px;">
+                <li>确保设备电量充足（建议80%以上）</li>
+                <li>提前备份重要数据，解锁过程可能会清除数据</li>
+                <li>选择与设备型号匹配的固件版本</li>
+                <li>解锁后可以自由安装自定义固件</li>
+                <li>定期检查更新以获取最新功能</li>
+            </ul>
+            <p class="card-supporting-text">如有任何问题，请参考详细教程或联系技术支持。</p>
+        </div>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="section">
+        <h2>执行操作</h2>
+        <div class="card-actions">
+            <button class="btn btn-filled" id="installBtn" onclick="handleAction('sudomiinstall')">
+                <i class="material-icons btn-icon">install_desktop</i>
+                解锁并刷入固件/降级
+            </button>
+            <button class="btn btn-outlined" id="unlockBtn" onclick="handleAction('oubl')">
+                <i class="material-icons btn-icon">lock_open</i>
+                仅解锁
+            </button>
+            <button class="btn btn-outlined" id="recoveryBtn" onclick="handleAction('rec')">
+                <i class="material-icons btn-icon">restore</i>
+                恢复模式刷机
+            </button>
+        </div>
+
+        <div id="progress-container" class="progress-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <div id="statusMessage" class="status-message"></div>
+    </div>
+
+    <!-- 许可证信息 -->
+    <div class="section">
+        <p>此软件基于GPL v3开源,请按照开源协议使用</p>
+        <p>版本 3.0r1</p>
+    </div>
 </div>
 
 <script>
@@ -613,6 +606,7 @@
         'miui14': 'MIUI 14',
         'hyperos1': '澎湃OS 1.0',
         'hyperos2': '澎湃OS 2.0',
+        'hyperos3': '澎湃OS 3.0',
         'chenguang': '晨光适配版',
         'deli_s865': '得力S865适配版',
         'sanlin_um100': '三菱um100',
@@ -679,29 +673,28 @@
         statusElement.className = 'status-message ' + (type || '');
         statusElement.style.display = 'block';
 
-
         setTimeout(() => {
             statusElement.style.display = 'none';
         }, 5000);
     }
 
     function handleAction(actionType) {
-
+        // 禁用按钮
         document.getElementById('installBtn').disabled = true;
         document.getElementById('unlockBtn').disabled = true;
         document.getElementById('recoveryBtn').disabled = true;
 
-
+        // 显示进度条
         const progressContainer = document.getElementById('progress-container');
         const progressBar = document.getElementById('progress-bar');
 
         progressContainer.style.display = 'block';
         progressBar.style.width = '0%';
 
-
+        // 显示状态
         showStatus('开始执行，请勿关闭页面...', 'warning');
 
-
+        // 模拟进度
         let progress = 0;
         const interval = setInterval(() => {
             progress += 5;
@@ -710,48 +703,37 @@
             if (progress >= 100) {
                 clearInterval(interval);
 
-
+                // 完成
                 showStatus('执行完成！', 'success');
 
-
+                // 重新启用按钮
                 document.getElementById('installBtn').disabled = false;
                 document.getElementById('unlockBtn').disabled = false;
                 document.getElementById('recoveryBtn').disabled = false;
 
-
+                // 隐藏进度条
                 setTimeout(() => {
                     progressContainer.style.display = 'none';
                 }, 5000);
             }
-
-            // 透镜效果的JavaScript代码
-            const lensContainer = document.getElementById('lensContainer');
-            const lens = document.getElementById('lens');
-            let isLensActive = false;
-
-            // 检测是否支持backdrop-filter
-            const supportsBackdropFilter = () => {
-                const test = document.createElement('div');
-                const prefixes = ['', '-webkit-', '-moz-', '-ms-', '-o-'];
-
-                for (let prefix of prefixes) {
-                    try {
-                        test.style[`${prefix}backdropFilter`] = 'blur(2px)';
-                        if (test.style[`${prefix}backdropFilter`]) {
-                            return true;
-                        }
-                    } catch (e) {}
-                }
-                return false;
-            };
-
-
-            // 窗口大小改变时更新透镜大小
-            window.addEventListener('resize', updateLensSize);
         }, 150);
 
         selectFirmware(actionType);
     }
+
+    // 简单的交互逻辑
+    document.addEventListener('DOMContentLoaded', function() {
+        // 为所有按钮添加点击效果
+        const buttons = document.querySelectorAll('.btn:not(.btn-disabled)');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    });
 </script>
 </body>
 </html>
